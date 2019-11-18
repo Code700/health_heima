@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/health_heima_359/health_common/health_common.iml" filepath="$PROJECT_DIR$/health_heima_359/health_common/health_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/health_heima_359/health_heima_359.iml" filepath="$PROJECT_DIR$/health_heima_359/health_heima_359.iml" />
+      <module fileurl="file://$PROJECT_DIR$/health_heima_359/health_interface/health_interface.iml" filepath="$PROJECT_DIR$/health_heima_359/health_interface/health_interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/health_heima_359/health_oms_backend/health_oms_backend.iml" filepath="$PROJECT_DIR$/health_heima_359/health_oms_backend/health_oms_backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/health_heima_359/health_oms_web/health_oms_web.iml" filepath="$PROJECT_DIR$/health_heima_359/health_oms_web/health_oms_web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/health_heima_359/health_service_provider01/health_service_provider01.iml" filepath="$PROJECT_DIR$/health_heima_359/health_service_provider01/health_service_provider01.iml" />
+    </modules>
+  </component>
+</project>
