@@ -3,6 +3,8 @@ package com.heima.health.mapper;
 import com.github.pagehelper.Page;
 import com.heima.health.pojo.CheckItem;
 
+import java.util.List;
+
 /**
  * @author 王立腾
  * @created 2019/11/18 15:02.
@@ -57,4 +59,6 @@ public interface CheckitemMapper {
      * @return
      */
     Integer update(CheckItem checkItem);
+
+    List<CheckItem> findChekitems();
 }

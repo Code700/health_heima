@@ -4,6 +4,8 @@ import com.heima.health.entity.PageResult;
 import com.heima.health.entity.QueryPageBean;
 import com.heima.health.pojo.CheckItem;
 
+import java.util.List;
+
 /**
  * @author 王立腾
  * @created 2019/11/18 14:59.
@@ -19,4 +21,6 @@ public interface CheckitemService {
     CheckItem findById(Integer id);
 
     Integer update(CheckItem checkItem);
+
+    List<CheckItem> findChekitems();
 }

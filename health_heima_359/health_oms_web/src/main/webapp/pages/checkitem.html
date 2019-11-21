@@ -30,7 +30,7 @@
             <div class="filter-container">
                 <el-input placeholder="项目编码/项目名称" v-model="pagination.queryString" style="width: 200px;"
                           class="filter-item"></el-input>
-                <el-button @click="findPage()" class="dalfBut">查询</el-button>
+                <el-button @click="findByWhere()" class="dalfBut">查询</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
             <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
@@ -234,6 +234,17 @@
             this.findPage()
         },
         methods: {
+
+            //按条件查询
+            findByWhere() {
+                //if (null != this.pagination.queryString && this.pagination.queryString.length > 0) {
+                //    this.pagination.currentPage = 1;
+                //    this.findPage()
+                //}else {
+                //    this.findPage()
+                //}
+                this.handleCurrentChange(1);
+            },
             //编辑
             handleEdit() {
                 this.$refs['dataEditForm'].validate((valid) => {
@@ -302,9 +313,7 @@
             },
             //分页查询
             findPage() {
-                if (null != this.pagination.queryString && this.pagination.queryString.length > 0) {
-                    this.pagination.currentPage = 1;
-                }
+
                 //为什么不直接把pagination做为参数
                 //1. 分装分页参数
                 // var param = {
@@ -359,8 +368,6 @@
 
 
                 this.dialogFormVisible4Edit = true;
-
-
             },
             //切换页码
             handleCurrentChange(currentPage) {

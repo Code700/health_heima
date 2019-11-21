@@ -9,8 +9,9 @@ import com.heima.health.pojo.CheckItem;
 import com.heima.health.service.CheckitemService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author 王立腾
@@ -86,7 +87,7 @@ public class CheckitemController {
     }
 
     @RequestMapping("/update")
-    public Result update(@RequestBody CheckItem checkItem){
+    public Result update(@RequestBody CheckItem checkItem) {
 
         try {
             Integer integer = checkitemService.update(checkItem);
@@ -100,6 +101,12 @@ public class CheckitemController {
             return new Result(false, "服务器异常！");
         }
 
+    }
+
+    @RequestMapping("findChekitems")
+    public Result findChekitem() {
+        List<CheckItem> list = checkitemService.findChekitems();
+        return new Result(true, MessageConst.QUERY_CHECKITEM_SUCCESS, list);
     }
 
 }

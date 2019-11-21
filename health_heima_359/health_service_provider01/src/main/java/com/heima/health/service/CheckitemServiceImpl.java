@@ -9,6 +9,8 @@ import com.heima.health.mapper.CheckitemMapper;
 import com.heima.health.pojo.CheckItem;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * @author 王立腾
  * @created 2019/11/18 15:00.
@@ -56,5 +58,10 @@ public class CheckitemServiceImpl implements CheckitemService {
     @Override
     public Integer update(CheckItem checkItem) {
         return checkitemMapper.update(checkItem);
+    }
+
+    @Override
+    public List<CheckItem> findChekitems() {
+        return checkitemMapper.findChekitems();
     }
 }
