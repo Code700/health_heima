@@ -30,4 +30,12 @@
     <!--启动时不检查-->
     <dubbo:consumer check="false"></dubbo:consumer>
 
+    <!--文件上传组件-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="104857600"/>
+        <property name="maxInMemorySize" value="4096"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
 </beans>

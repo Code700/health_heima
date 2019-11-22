@@ -342,26 +342,13 @@
                 axios.post(this.controllerBaseUrlPath + "/checkgroup/findByPage.action", this.pagination)
                     .then(response => {
                         console.info(response);
-
-                        var num = response.data.total / this.pagination.pageSize;
-                        var isCurrentChange = this.pagination.currentPage - num;
-                        if (isCurrentChange == 1) {
-                            this.pagination.currentPage = this.pagination.currentPage - 1;
-                            this.handleCurrentChange(this.pagination.currentPage);
-                        } else if (isCurrentChange < 0) {
-                            this.pagination.currentPage = this.pagination.currentPage + 1;
-                            this.handleCurrentChange(this.pagination.currentPage);
-                        } else {
-                            this.dataList = response.data.rows;
-                            this.pagination.total = response.data.total;
-                        }
-
+                        this.dataList = response.data.rows;
+                        this.pagination.total = response.data.total;
                     })
                     .catch(error => {
                         console.error(error);
                         this.sysError();
                     })
-
             },
             _findPage() {
                 this.handleCurrentChange(1);
@@ -468,17 +455,7 @@
             //切换页码
             handleCurrentChange(currentPage) {
                 this.pagination.currentPage = currentPage;
-                // this.findPage()
-                axios.post(this.controllerBaseUrlPath + "/checkgroup/findByPage.action", this.pagination)
-                    .then(response => {
-                        console.info(response);
-                        this.dataList = response.data.rows;
-                        this.pagination.total = response.data.total;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        this.sysError();
-                    })
+                this.findPage()
             },
             // 删除
             handleDelete(row) {
@@ -487,7 +464,15 @@
                     .then(response => {
                         if (response.data.flag) {
                             // this.handleCurrentChange(1);
-                            this.findPage()
+
+                            var num = this.pagination.total % this.pagination.pageSize;
+                            var num1 = this.pagination.total / this.pagination.pageSize;
+                            if (num == 1) {
+                                this.pagination.currentPage = this.pagination.currentPage - 1;
+                                this.handleCurrentChange(this.pagination.currentPage);
+                            } else {
+                                this.findPage()
+                            }
                             this.$message({
                                 message: response.data.message,
                                 type: "success"

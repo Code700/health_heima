@@ -84,4 +84,11 @@ public interface CheckGroupMapper {
      * @return
      */
     Integer delCheckgroup(Integer id);
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    List<CheckGroup> findAll();
 }

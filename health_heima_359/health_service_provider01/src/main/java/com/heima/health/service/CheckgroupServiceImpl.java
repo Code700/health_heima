@@ -90,4 +90,9 @@ public class CheckgroupServiceImpl implements CheckgroupService {
             return integer;
         }
     }
+
+    @Override
+    public List<CheckGroup> findAll() {
+        return checkGroupMapper.findAll();
+    }
 }

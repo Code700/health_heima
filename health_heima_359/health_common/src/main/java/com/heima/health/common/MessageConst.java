@@ -8,6 +8,7 @@ package com.heima.health.common;
 public class MessageConst {
     public static final String ACTION_SUCCESS = "操作成功";
     public static final String ACTION_FAIL = "操作失败";
+    public static final String EXCEPTION = "数据异常，请稍后再试！";
 
     public static final String DELETE_CHECKITEM_FAIL = "删除检查项失败";
     public static final String DELETE_CHECKITEM_SUCCESS = "删除检查项成功";

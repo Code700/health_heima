@@ -23,4 +23,6 @@ public interface CheckgroupService {
     Integer update(CheckGroup checkGroup, Integer[] checkitems);
 
     Integer deleteCheckgroup(Integer id);
+
+    List<CheckGroup> findAll();
 }

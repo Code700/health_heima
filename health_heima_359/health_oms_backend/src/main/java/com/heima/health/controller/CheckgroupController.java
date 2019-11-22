@@ -6,6 +6,7 @@ import com.heima.health.entity.PageResult;
 import com.heima.health.entity.QueryPageBean;
 import com.heima.health.entity.Result;
 import com.heima.health.pojo.CheckGroup;
+import com.heima.health.pojo.CheckItem;
 import com.heima.health.service.CheckgroupService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,7 +83,7 @@ public class CheckgroupController {
             Integer integer = checkgroupService.deleteCheckgroup(id);
             if (integer == 1) {
                 return new Result(true, MessageConst.DELETE_CHECKGROUP_SUCCESS);
-            } else if (integer==-1) {
+            } else if (integer == -1) {
                 return new Result(true, "该检查组已在套餐中，不能删除该组！");
             } else {
                 return new Result(false, MessageConst.DELETE_CHECKGROUP_FAIL);
@@ -102,6 +103,22 @@ public class CheckgroupController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(true, MessageConst.QUERY_CHECKITEM_FAIL);
+        }
+    }
+
+
+    @RequestMapping("/findAll")
+    public Result findAll() {
+        try {
+            List<CheckGroup> checkGroups = checkgroupService.findAll();
+
+            if (null != checkGroups) {
+                return new Result(true, MessageConst.ACTION_SUCCESS, checkGroups);
+            }
+            return new Result(false, MessageConst.QUERY_CHECKGROUP_FAIL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "数据异常，请稍后再试！");
         }
     }
 }

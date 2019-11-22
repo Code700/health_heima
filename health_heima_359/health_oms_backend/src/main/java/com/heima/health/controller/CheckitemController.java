@@ -86,6 +86,8 @@ public class CheckitemController {
         return new Result(false, MessageConst.QUERY_CHECKITEM_FAIL);
     }
 
+
+
     @RequestMapping("/update")
     public Result update(@RequestBody CheckItem checkItem) {
 
