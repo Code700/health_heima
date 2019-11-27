@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+
 /**
  * @author 王立腾
  * @created 2019/11/21 21:39.
@@ -51,5 +53,15 @@ public class SetmealServiceImpl implements SetmealService {
         Page<Setmeal> pages = setmealMapper.findByPage(queryPageBean.getQueryString());
 
         return new PageResult(pages.getTotal(), pages);
+    }
+
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealMapper.findAll();
+    }
+
+    @Override
+    public Setmeal findById(Integer id) {
+        return setmealMapper.findById(id);
     }
 }

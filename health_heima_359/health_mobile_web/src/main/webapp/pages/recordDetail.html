@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../img/asset-favico.ico">
+    <title>编辑信息</title>
+    <link rel="stylesheet" href="../css/page-health-orderInfo.css" />
+    <link rel="stylesheet" href="../plugins/elementui/index.css" />
+    <script src="../plugins/vue/vue.js"></script>
+    <script src="../plugins/vue/axios-0.18.0.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script src="../plugins/healthmobile.js"></script>
+</head>
+<script type="text/javascript">
+    var id = getUrlParam("id");
+</script>
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+<div id="app" class="app">
+    <!-- 页面头部 -->
+    <div class="top-header">
+        <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+        <span class="center">传智健康</span>
+        <span class="f-right"><i class="icon-more"></i></span>
+    </div>
+    <!-- 页面内容 -->
+    <div class="contentBox">
+        <div class="form-info">
+            <div class="info-title">
+                <span class="name">个人基本信息</span>
+            </div>
+            <form class="info-form">
+                <div class="input-row">
+                    <label>档案编号</label>
+                    <input type="text" v-model="formData.fileNumber" title="fixed" readOnly="true" placeholder="请输入档案编号">
+                </div>
+                <div class="input-row">
+                    <label>姓名</label>
+                    <input type="text" v-model="formData.name"  readOnly="true" placeholder="请输入姓名">
+                </div>
+                <div class="input-row single-radio">
+                    <label class="radio-title">性别</label>
+                    <div class="radio-list">
+                        <div class="radio">
+                            <input v-model="formData.sex" title="disabled" disabled id="item1" type="radio" name="sex" value="1" checked>
+                            <label for="item1"></label>
+                            <span>男</span>
+                        </div>
+                        <div class="radio">
+                            <input v-model="formData.sex" title="disabled"  disabled id="item2" type="radio" name="sex" value="0">
+                            <label for="item2"></label>
+                            <span>女</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <label>身份证号</label>
+                    <input type="text"  readOnly="true" v-model="formData.idCard" class="input-clear" placeholder="请输入身份证号">
+                </div>
+                <div class="input-row">
+                    <label>手机号码</label>
+                    <input type="text"  readOnly="true" v-model="formData.phoneNumber" class="input-clear" placeholder="请输入手机号码">
+                </div>
+                <div class="input-row">
+                    <label>email</label>
+                    <input type="text"  readOnly="true" v-model="formData.email" class="input-clear" placeholder="请输入邮箱">
+                </div>
+                <div class="input-row">
+                    <label>出生日期</label>
+                    <input  type="date" v-model="formData.birthday" readOnly="true" class="input-clear">
+                </div>
+                <div class="input-row">
+                    <label >注册时间</label>
+                    <input type="date" title="fixed" v-model="formData.regTime"  readOnly="true" class="input-clear">
+                </div>
+                <div class="input-row">
+                    <label>备注</label>
+                    <input type="text" readOnly="true" v-model="formData.remark" class="input-clear" placeholder="请输入备注">
+                </div>
+            </form>
+            <div class="box-button">
+                <button @click="allow()" id="btn" style="background-color: #d3dce6" type="button" class="btn order-btn">1分钟完善信息</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            formData:{
+                fileNumber:"110111001110",
+                name:"张小花",
+                sex:0,
+                idCard:"111111111111111",
+                phoneNumber: "13434343434",
+                regTime:"2019-10-19",
+                email:"zhangxiaohua@itcast.cn",
+                birthday:"2019-01-01",
+                remark: "无"
+            },
+            backendUrl: "http://localhost:85"
+        },
+        created(){
+            this.findById();
+        },
+        methods:{
+            //查询个人信息
+            findById(){
+                axios.get(this.backendUrl + "/member/findById.do?id="+id).then((res)=>{
+                    this.formData = res.data.data;
+
+                    //由于获取的数据中的日期都是日期的毫秒值，转换为日期类型
+                    var birthday = new Date(res.data.data.birthday);
+                    this.formData.birthday = this.formatDate(birthday.getFullYear(),birthday.getMonth() +1, birthday.getDate());
+                    var regTime = new Date(res.data.data.regTime);
+                    this.formData.regTime = this.formatDate(regTime.getFullYear(),regTime.getMonth() +1, regTime.getDate());
+
+                }).catch((err)=>{
+                    console.log(err);
+                });
+            },
+            //允许修改
+            allow(){
+                var btnVal = document.getElementById("btn").innerHTML;
+                //如果按钮的文本是提交，则提交数据到controller
+                if(btnVal == "提交"){
+                    //提交数据
+                    axios.post(this.backendUrl + "/member/submit.do",this.formData).then((res)=>{
+                        this.$message({
+                            message:res.data.data,
+                            type:res.data.flag ? "success": "error"
+                        });
+                        if(res.data.flag){
+                            //如果操作成功，调整到index.html页面
+                            window.location.href = "index.html";
+                        }
+                    }).catch((err)=>{
+                        console.log(err);
+                    });
+                }else{
+                    //如果按钮文本不是提交，则修改文本框为非只读（可修改）
+                    //获取所有的文本框
+                    var inputs = document.getElementsByTagName("input");
+                    for (var i = 0 ; i < inputs.length; i ++){
+                        //如果title！="fixed" 则修改为非只读
+                        if(inputs[i].title != "fixed"){
+                            inputs[i].readOnly = false;
+                        }else{
+                            //其他保持只读状态，修改背景颜色为灰色
+                            inputs[i].style.backgroundColor = "#d3dce6";
+                        }
+                        //适用性别调整为禁用
+                        if(inputs[i].title == "disabled"){
+                            inputs[i].disabled = "";
+                        }
+                    }
+                    //修改按钮上的文本为"提交"
+                    document.getElementById("btn").innerHTML = "提交"
+                }
+
+            },// 返回 类似 2016-01-02 格式的字符串
+            formatDate: function (year, month, day) {
+                var y = year;
+                var m = month;
+                if (m < 10) m = "0" + m;
+                var d = day;
+                if (d < 10) d = "0" + d;
+                return y + "-" + m + "-" + d
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

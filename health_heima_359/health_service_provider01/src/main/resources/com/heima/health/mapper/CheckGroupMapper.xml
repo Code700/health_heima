@@ -44,4 +44,33 @@
     <select id="findAll" resultType="com.heima.health.pojo.CheckGroup">
         select id, code, name, helpCode, sex, remark, attention from t_checkgroup
     </select>
+
+    <resultMap id="findCheckGroupListBySetmealIdMap" type="com.heima.health.pojo.CheckGroup">
+        <id column="id" property="id"></id>
+        <result column="code" property="code"></result>
+        <result column="name" property="name"></result>
+        <result column="helpCode" property="helpCode"></result>
+        <result column="sex" property="sex"></result>
+        <result column="remark" property="remark"></result>
+        <result column="attention" property="attention"></result>
+        <!--映射检查项-->
+        <!--一对多关联-->
+        <!--
+                  fetchType="lazy": 懒加载
+                  property： 对应属性名
+                  column： 对应列名（已知条件）（一定是sql的结果集中存在的列）
+                  ofType: 属性的泛型
+                  select： 可以sql语句，方法的唯一标识（全名称=包名+类名 + 方法名）
+                          根据检查组id查询 检查项信息
+                          List<CheckItem> com.itheima.dao.CheckItemDao.findCheckItemListByCheckGroupId(Integer checkgroupId)
+
+              -->
+        <collection property="checkItems" ofType="com.heima.health.pojo.CheckItem" column="id"
+                    select="com.heima.health.mapper.CheckitemMapper.findCheckItemListByCheckGroupId"></collection>
+    </resultMap>
+
+    <select id="findCheckGroupListByStetmealId" parameterType="int" resultMap="findCheckGroupListBySetmealIdMap">
+         select id, code, name, helpCode, sex, remark, attention from t_checkgroup
+         where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{setmealId})
+    </select>
 </mapper>

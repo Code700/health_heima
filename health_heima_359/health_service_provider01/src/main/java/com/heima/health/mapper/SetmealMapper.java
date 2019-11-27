@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.heima.health.pojo.Setmeal;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @author 王立腾
  * @created 2019/11/21 21:44.
@@ -32,4 +34,8 @@ public interface SetmealMapper {
      * @return
      */
     Page<Setmeal> findByPage(String queryString);
+
+    List<Setmeal> findAll();
+
+    Setmeal findById(Integer id);
 }

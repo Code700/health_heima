@@ -91,4 +91,6 @@ public interface CheckGroupMapper {
      * @return
      */
     List<CheckGroup> findAll();
+
+    CheckGroup findCheckGroupListByStetmealId(Integer setmealId);
 }

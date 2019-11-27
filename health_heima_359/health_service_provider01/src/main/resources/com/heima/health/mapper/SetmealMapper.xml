@@ -17,4 +17,33 @@
         </where>
     </select>
 
+    <select id="findAll" resultType="com.heima.health.pojo.Setmeal">
+        select id,name, code, helpCode, sex, age, price, remark, attention, img from t_setmeal
+    </select>
+
+    <resultMap id="baseMap" type="com.heima.health.pojo.Setmeal">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="code" property="code"></result>
+        <result column="helpCode" property="helpCode"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="remark" property="remark"></result>
+        <result column="price" property="price"></result>
+        <result column="attention" property="attention"></result>
+        <result column="img" property="img"></result>
+    </resultMap>
+
+
+    <resultMap id="findByIdMap" type="com.heima.health.pojo.Setmeal" extends="baseMap">
+        <collection property="checkGroups"
+                    column="id"
+                    ofType="com.heima.health.pojo.CheckGroup"
+                    select="com.heima.health.mapper.CheckGroupMapper.findCheckGroupListByStetmealId"></collection>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="findByIdMap">
+        select * from t_setmeal where id = #{id}
+    </select>
+
 </mapper>

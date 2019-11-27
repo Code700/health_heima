@@ -61,4 +61,6 @@ public interface CheckitemMapper {
     Integer update(CheckItem checkItem);
 
     List<CheckItem> findChekitems();
+
+    CheckItem findCheckItemListByCheckGroupId(Integer checkGroupId);
 }
